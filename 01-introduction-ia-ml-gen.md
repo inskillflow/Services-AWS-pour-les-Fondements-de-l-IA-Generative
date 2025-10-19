@@ -1,6 +1,6 @@
 # Introduction — IA, ML et IA générative
 
-*Fichier : `01-introduction.md`*
+*Fichier : `01-introduction-ia-ml-gen.md`*
 
 ## Plan de matière
 
