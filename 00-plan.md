@@ -1,10 +1,8 @@
 # Plan de formation – IA générative et Agentic AI
 
-- **01-introduction-ia-ml-gen.md** – Bases de l’IA, ML et IA générative
-
-- **02-pratique-introduction-ia-ml-gen.md** – Paramètres de génération (température, top-p)
-
-- **03-foundation-models.md** – Modèles de fondation (GPT, Claude, Titan, Gemini)
+ **01-introduction-ia-ml-gen.md** – Bases de l’IA, ML et IA générative
+ **02-pratique-introduction-ia-ml-gen.md** – Paramètres de génération (température, top-p)
+ **03-foundation-models.md** – Modèles de fondation (GPT, Claude, Titan, Gemini)
 
 - **04-pratique-foundation-models.md** – Comparaison multi-modèles
 
