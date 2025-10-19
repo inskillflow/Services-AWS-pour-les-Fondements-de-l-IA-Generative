@@ -1,38 +1,37 @@
 # Plan de formation – IA générative et Agentic AI
 
- **01-introduction-ia-ml-gen.md** – Bases de l’IA, ML et IA générative
- 
- **02-pratique-introduction-ia-ml-gen.md** – Paramètres de génération (température, top-p)
- 
- **03-foundation-models.md** – Modèles de fondation (GPT, Claude, Titan, Gemini)
+* 01-introduction-ia-ml-gen.md – Bases de l’IA, ML et IA générative
 
-- **04-pratique-foundation-models.md** – Comparaison multi-modèles
+* 02-pratique-introduction-ia-ml-gen.md – Paramètres de génération (température, top-p)
 
-- **05-prompt-engineering.md** – Structure et stratégies de prompts
+* 03-foundation-models.md – Modèles de fondation (GPT, Claude, Titan, Gemini)
 
-- **06-pratique-prompt-engineering.md** – Création et test de prompts efficaces
+* 04-pratique-foundation-models.md – Comparaison de modèles et fine-tuning
 
-- **07-inference-parameters.md** – Température, top-k, cohérence
+* 05-prompt-engineering.md – Structure, contexte, style et contraintes des prompts
 
-- **08-pratique-inference-parameters.md** – Ajustement et observation
+* 06-pratique-prompt-engineering.md – Création et test de prompts efficaces
 
-- **09-responsible-ai.md** – IA responsable, biais et garde-fous
+* 07-inference-parameters.md – Température, top-k, top-p, cohérence et longueur
 
-- **10-pratique-responsible-ai.md** – Détection de biais et sécurisation
+* 08-pratique-inference-parameters.md – Ajustement et observation des sorties
 
-- **11-security-governance.md** – Sécurité, conformité, gouvernance
+* 09-responsible-ai.md – IA responsable, biais, équité et garde-fous
 
-- **12-pratique-security-governance.md** – Sécurisation d’API et audit
+* 10-pratique-responsible-ai.md – Détection et correction des biais
 
-- **13-agentic-ai.md** – Définition et principes des agents IA
+* 11-security-governance.md – Sécurité, conformité, audit et gouvernance IA
 
-- **14-pratique-agentic-ai.md** – Construction d’un agent intelligent
+* 12-pratique-security-governance.md – Sécurisation d’API et gestion des accès
 
-- **15-implementing-genai-apps.md** – Développement d’applications IA
+* 13-agentic-ai.md – Principes des agents IA et intelligence agentique
 
-- **16-pratique-genai-apps.md** – Création d’une app générative (texte + image)
+* 14-pratique-agentic-ai.md – Création d’un agent autonome (LangChain, CrewAI)
 
-- **17-projet-final.md** – Guide du projet intégrateur
+* 15-implementing-genai-apps.md – Architecture et intégration d’applications IA
 
-- **18-projet-final-pratique.md** – Réalisation et évaluation finale
+* 16-pratique-genai-apps.md – Développement d’une app générative (texte + image)
 
+* 17-projet-final.md – Présentation du projet intégrateur
+
+* 18-projet-final-pratique.md – Réalisation complète et évaluation finale
