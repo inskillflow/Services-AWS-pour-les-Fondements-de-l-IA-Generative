@@ -31,49 +31,389 @@
 
 ## 2) Notions essentielles et vocabulaire
 
-* **Foundation Model (FM)** : grand modèle préentraîné, polyvalent, réutilisable.
-* **LLM** : modèle texte/code (raisonnement, Q&A, structuration).
-* **VLM** : modèle multimodal texte↔image (analyse image, OCR léger, légendes).
-* **Modèle de diffusion** : génération d’images par débruitage (SDXL, SD3).
-* **Embeddings** : représentations vectorielles pour recherche/RAG.
-* **Fenêtre de contexte** : tokens max visibles à l’inférence (impacte coûts/longueurs).
-* **Agentic AI** : système qui **planifie → agit (outils) → vérifie → itère** de façon autonome guidée.
-* **Guardrails** : contraintes de sécurité/qualité appliquées à l’entrée/sortie.
+
+* **Foundation Model (FM)**  
+  Grand modèle préentraîné, polyvalent, réutilisable sur beaucoup de tâches.  
+  **Exemples** : GPT-4/4o (texte+image), Claude 3.x (texte), Gemini 1.5 (multimodal), Llama 3.x (ouvert).  
+  **À quoi ça sert ?** Démarrer vite sans réentraîner un modèle de zéro (résumé, Q&A, extraction, chat).
+
+* **LLM (Large Language Model)**  
+  Modèle centré **texte/code** : comprend, reformule, écrit, structure.  
+  **Exemples d’usages** :  
+  – Réécrire un email professionnel court.  
+  – Extraire des champs d’une facture en JSON.  
+  – Expliquer un bout de code ligne par ligne.  
+  **Mini-prompt** : `Explique ce paragraphe en 3 puces simples.`
+
+* **VLM (Vision-Language Model)**  
+  Modèle **multimodal** texte↔image : décrit, répond sur une image, OCR simple.  
+  **Exemples d’usages** :  
+  – Légender une photo de laboratoire.  
+  – Lister les panneaux visibles sur une image de rue.  
+  – Trouver les différences entre deux captures d’écran.  
+  **Mini-prompt** : `Décris en 4 phrases ce graphique (image jointe).`
+
+* **Modèle de diffusion (images)**  
+  Génère des images par **débruitage progressif** (guidé par un prompt).  
+  **Exemples** : SDXL/SD3, Flux, Playground.  
+  **Réglages typiques** : steps (≈30), guidance (≈7), seed (reproductible).  
+  **Mini-prompt** : `Portrait réaliste d’un violon sur table en bois, lumière douce, format 1536×1536.`
+
+* **Embeddings**  
+  Vecteurs numériques qui représentent le sens d’un texte (ou d’une image).  
+  **À quoi ça sert ?** Recherche sémantique, RAG, détection de similarité.  
+  **Exemple concret** : retrouver l’article le plus proche d’une question utilisateur.
+
+* **Fenêtre de contexte**  
+  Nombre **max de tokens** (morceaux de texte) que le modèle “voit” d’un coup.  
+  **Impact** : plus de contexte = prompts plus longs, coûts/latence plus élevés.  
+  **Repères** : courts (≈8k), moyens (≈32k), longs (≈200k+).  
+  **Astuce** : résumer/segmenter les documents avant d’injecter.
+
+* **Agentic AI (agents)**  
+  Système qui **planifie → appelle des outils → vérifie → itère** avec des objectifs simples.  
+  **Exemples d’outils** : recherche web interne, base de données, calendrier, API météo.  
+  **Cas d’usage** : remplir un rapport hebdo en allant chercher des chiffres, puis se relire.
+
+* **Guardrails (garde-fous)**  
+  Règles/filtrages pour **sécurité et qualité** : bloquer PII, refuser contenus sensibles, valider un **format JSON**.  
+  **Exemples** :  
+  – Filtrer un prompt contenant des numéros de carte.  
+  – Vérifier qu’une sortie respecte un schéma JSON avant d’envoyer.  
+  – Réécrire en ton neutre et enlever les infos privées.
+
+<br/>
+
+### Exemples éclair express
+
+* **LLM — extraction**  
+  Entrée : `Nom: Marie, Tél: 06..., RDV: 12/11, Ville: Lyon`  
+  Sortie attendue (JSON) : `{"nom":"Marie","telephone":"06...","date":"2025-11-12","ville":"Lyon"}`
+
+* **VLM — description d’image**  
+  Entrée : photo d’un ticket de caisse.  
+  Sortie : `3 produits, total 18,30 €, date 05/09, magasin “Bio+”.`
+
+* **Diffusion — bannière 16:9**  
+  Prompt : `Paysage côtier au lever du soleil, style photo, brume légère, 2048×1152, sans texte.`
+
+* **Embeddings + RAG**  
+  Étapes : (1) convertir les PDF en vecteurs → (2) rechercher les 3 plus proches pour la question → (3) donner ces extraits au LLM pour répondre “ancré”.
+
+<br/>
+
+### Rappels ultra-simples
+
+* **Choix rapide** : texte → LLM ; texte+image → VLM ; image à créer → diffusion.  
+* **Contexte** : trop long coûte cher → résume ou découpe.  
+* **Sécurité** : applique des **guardrails** sur entrée et sortie (PII, format).  
+* **Agent** : commence avec 1–2 outils, limite les itérations, trace chaque action.
+
 
 **Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
 
 <br/>
 
-## 3) Panorama rapide des modèles (GPT, Claude, Gemini, Llama/Mistral, Titan, SDXL…)
 
-| Famille | Modèles | Points forts | Points d’attention |
-|---|---|---|---|
-| **LLM** (propriétaires) | GPT-4/4o, Claude 3.x, Gemini 1.5 | qualité, outils, multimodalité | coûts, dépendance fournisseur |
-| **LLM** (ouverts) | Llama 3.x, Mistral/Mixtral, Qwen, Phi | coût/latence maîtrisables, on-prem | tuning/ops à prévoir, qualité variable |
-| **VLM** | GPT-4o, Gemini multi, LLaVA | compréhension image + texte | robustesse inégale selon tâches |
-| **Diffusion** | SDXL/SD3, Playground, Flux | contrôle créatif, écosystèmes riches | seed/steps/guidance à maîtriser |
-| **Entreprise** | Amazon Titan, Cohere Command | gouvernance, SLA, intégrations | couverture langue/domaines |
+
+
+# 3) Panorama rapide des modèles (GPT, Claude, Gemini, Llama/Mistral, Titan, SDXL…)
+
+### Vue d’ensemble simplifiée
+
+Les **modèles de fondation** sont aujourd’hui classés en grandes familles selon leur **type de données** (texte, image, multimodal) et leur **mode d’accès** (propriétaire ou ouvert).  
+Le tableau ci-dessous te donne une lecture claire de l’écosystème actuel.
+
+| **Famille** | **Modèles connus** | **Points forts (à retenir)** | **Points d’attention (à surveiller)** |
+|--------------|--------------------|-------------------------------|----------------------------------------|
+| **LLM (propriétaires)** | GPT-4 / GPT-4o (OpenAI), Claude 3.x (Anthropic), Gemini 1.5 (Google) | Très haute qualité, raisonnement fiable, outils intégrés (code, image, web), multimodalité | Coûts élevés, dépendance au fournisseur, limites d’usage (API fermée) |
+| **LLM (ouverts)** | Llama 3.x (Meta), Mistral / Mixtral, Qwen, Phi-3 | Gratuits ou peu coûteux, rapides, exécutables localement ou sur cloud privé | Nécessitent configuration, maintenance, évaluation et sécurité manuelles |
+| **VLM (Vision-Language)** | GPT-4o, Gemini multimodal, LLaVA | Comprennent texte + image, bonnes pour analyse visuelle ou OCR | Moins précises pour des images complexes ou du texte manuscrit |
+| **Diffusion (image)** | SDXL / SD3 (Stability AI), Playground, Flux, Leonardo | Excellente créativité visuelle, contrôles fins (seed, style, guidance) | Maîtriser le prompt, les paramètres steps/guidance pour éviter dérives ou artefacts |
+| **Entreprise (gouvernance)** | Amazon Titan, Cohere Command, Azure OpenAI | Intégration sécurisée, conformité, surveillance, SLA garantis | Plus restreints, souvent centrés sur le marché anglophone |
+
+
+
+### Exemples illustratifs (débutants)
+
+**1. LLM propriétaire – GPT-4o (OpenAI)**  
+→ Chat intelligent, résumé, correction de texte, génération de code.  
+**Prompt exemple :**
+
+```
+Explique ce code Python ligne par ligne et résume son but en une phrase.
+```
+
+**2. LLM ouvert – Llama 3 (Meta)**  
+→ Déployable sur ton propre serveur ou PC local.  
+**Cas typique :** assistant conversationnel privé sans fuite de données.
+
+**3. VLM – Gemini ou GPT-4o**  
+→ Analyse d’image, identification d’objets, lecture d’un document visuel.  
+**Exemple :**  
+
+```
+Décris les éléments visibles sur cette photo et donne le nombre de personnes.
+```
+
+**4. Modèle de diffusion – SDXL / Playground**  
+→ Génération d’images réalistes ou artistiques.  
+**Exemple :**  
+
+```
+Portrait artistique d’un chercheur en IA devant un tableau de formules, style photo, lumière douce.
+```
+
+**5. Titan (AWS Bedrock)**  
+→ Modèle textuel et visuel intégré à un environnement AWS sécurisé.  
+**Cas d’usage :** résumé automatisé de documents internes, génération de descriptions produits en e-commerce.
+
+
+
+### Comparatif express par tâche
+
+| **Tâche** | **Modèle recommandé** | **Pourquoi ?** |
+|------------|-----------------------|----------------|
+| Résumer un texte | GPT-4 / Claude 3 | Fiabilité, structuration naturelle |
+| Générer un texte créatif | Gemini 1.5 / Mistral 7B | Créativité, rapidité |
+| Créer une image | SDXL / Flux / Playground | Contrôle artistique |
+| Analyser une image | GPT-4o / Gemini multimodal | Vision + langage |
+| Déploiement privé | Llama 3 / Mistral | Exécution locale, sécurité |
+| Production entreprise | Titan / Cohere Command | SLA, conformité, traçabilité |
+
+
+
+### À retenir
+
+* **Propriétaires** = performance + support + coût.  
+* **Ouverts** = liberté + ajustement + maintenance.  
+* **Multimodaux** = texte + image dans un seul flux.  
+* **Diffusion** = génération d’images créatives.  
+* **Entreprise** = gouvernance, audit, intégration cloud.
+
+**Conseil** : pour un étudiant débutant, commence par **GPT-4o ou Claude** pour le texte, puis expérimente **SDXL** pour les images avant d’explorer les modèles ouverts (Llama, Mistral).
 
 **Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
 
+
+
+
+
+
+
+
 <br/>
+
+
+
+
 
 ## 4) Entraînement, adaptation et gouvernance
 
-**Chaîne d’adaptation**  
-1) **Prompting** (ingénierie d’instructions)  
-2) **RAG** (contextualisation par récupération)  
-3) **Adapters légers** (LoRA/QLoRA)  
-4) **Fine-tuning** ciblé (si vraiment nécessaire)
+### 4.1 Comprendre le cycle d’adaptation
 
-**Gouvernance minimale**  
-* Journaliser : prompt, version modèle, paramètres, coûts.  
-* Sécurité : PII, contenu sensible, refus normés.  
-* Évaluation continue : jeux de tests internes + revue humaine.
+Les modèles d’IA comme GPT-4o, Claude 3, Gemini 1.5 ou Mistral 7B peuvent être **personnalisés progressivement** selon le projet sans devoir les réentraîner complètement.  
+On distingue quatre grands **niveaux d’adaptation**, du plus simple (prompting) au plus complexe (fine-tuning complet).
+
+| **Niveau** | **Méthode** | **Principe** | **Quand l’utiliser** | **Exemple concret (Canada/US)** |
+|-------------|-------------|---------------|----------------------|--------------------------------|
+| 1️⃣ | **Prompting** | Modifier les instructions textuelles et fournir des exemples | Pour créer des assistants rapides (chatbots, générateurs de contenu) | Créer un assistant qui résume des offres d’emploi à Montréal ou Toronto |
+| 2️⃣ | **RAG (Retrieval Augmented Generation)** | Ajouter des extraits de vos propres données à chaque requête | Pour relier un modèle à une base locale (PDF, BD, site web) | Assistant qui répond à partir de documents internes d’une entreprise tech canadienne |
+| 3️⃣ | **Adapters légers (LoRA / QLoRA)** | Ne réentraîner qu’une petite partie du modèle | Pour spécialiser un LLM open-source à un domaine technique | Adapter Mistral pour comprendre le vocabulaire des startups SaaS nord-américaines |
+| 4️⃣ | **Fine-tuning complet** | Réentraîner le modèle sur un corpus spécifique | Pour les grands projets institutionnels ou industriels | Entraîner un modèle sur les lois fiscales canadiennes ou les documents médicaux bilingues |
+
+
+
+### 4.2 Étape 1 – Prompting (ingénierie d’instructions)
+
+C’est la méthode la plus simple et la plus courante : tout se joue dans le texte que vous envoyez au modèle.  
+Un bon prompt décrit clairement **le rôle**, **la tâche**, **le ton** et **le format** attendus.
+
+#### Exemple 1 : analyse d’opportunités économique
+
+
+```
+Rôle : Analyste d'affaires.
+Tâche : Résume les tendances de l'emploi en cybersécurité au Canada.
+Format : 5 phrases, ton professionnel, avec une recommandation finale.
+```
+
+#### Exemple 2 : rédaction marketing
+
+```
+Rôle : Rédacteur IA.
+Tâche : Rédige une courte description LinkedIn pour une startup IA basée à Montréal.
+Contrainte : 250 caractères, ton optimiste et crédible.
+```
+
+#### Exemple 3 : génération de code
+
+```
+Rôle : Développeur Python senior.
+Tâche : Crée un script Flask minimal pour recevoir et afficher un JSON envoyé par un client.
+```
+
+> ✅ **Avantage** : immédiat, accessible à tous, aucun coût d’entraînement.  
+> ⚠️ **Limite** : le modèle oublie vos préférences si vous ne les redonnez pas à chaque fois.
+
+
+
+### 4.3 Étape 2 – RAG (Retrieval Augmented Generation)
+
+Le **RAG** permet de relier un modèle à **vos données réelles** : CV, rapports, sites, bases techniques.  
+Le modèle lit des extraits précis au lieu de deviner.
+
+#### Principe
+1. Convertir vos documents en **embeddings** (vecteurs numériques).  
+2. Rechercher les passages les plus pertinents selon la requête.  
+3. Injecter ces passages dans le prompt avant de générer la réponse.
+
+#### Exemple : assistant carrière canadien
+
+```
+Contexte :
+<<<
+Rapport de Emploi Québec : "Le salaire moyen en IA à Montréal a augmenté de 14 % entre 2021 et 2024."
+> > >
+
+Question :
+Quelles régions canadiennes affichent la plus forte croissance des emplois IA ?
+
+```
+#### Exemple : documentation technique d’entreprise
+```
+
+Contexte :
+<<<
+README du projet API-Analytics :
+
+* Endpoint : /v1/data
+* Authentification : Bearer token
+
+> > >
+
+Question :
+Comment authentifier un utilisateur dans cette API ?
+
+
+
+> ✅ **Avantage** : réponses fiables et basées sur vos sources locales.  
+> ⚠️ **Limite** : nécessite une petite base vectorielle (FAISS, Chroma ou Pinecone).
+
+
+
+### 4.4 Étape 3 – Adapters légers (LoRA / QLoRA)
+
+On peut affiner un modèle **open-source** (ex. Llama, Mistral) sans tout réentraîner.  
+Seules quelques couches internes sont modifiées : c’est rapide et peu coûteux.
+
+#### Exemple : adapter un modèle au vocabulaire technologique canadien
+* Objectif : mieux comprendre les termes du secteur numérique (fintech, IA, cloud, DevOps).  
+* Données : 800 paragraphes issus d’offres d’emploi IT à Montréal et Toronto.  
+* Outils : `transformers` + `peft` (Hugging Face).  
+
+```python
+from peft import LoraConfig, get_peft_model
+from transformers import AutoModelForCausalLM
+
+model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B")
+config = LoraConfig(r=8, lora_alpha=16, target_modules=["q_proj", "v_proj"])
+lora_model = get_peft_model(model, config)
+````
+
+> ✅ **Avantage** : rapide, local, idéal pour adapter un modèle bilingue FR/EN.
+> ⚠️ **Limite** : demande un GPU et un minimum de savoir-faire en IA appliquée.
+
+
+
+### 4.5 Étape 4 – Fine-tuning complet (entraînement spécialisé)
+
+Le **fine-tuning complet** est réservé aux grands projets institutionnels ou à la R&D.
+Il consiste à réentraîner tout le modèle sur des données spécifiques (souvent des millions de lignes).
+
+#### Exemple : modèle IA pour le marché du travail canadien
+
+| Élément  | Description                                                     |
+| -------- | --------------------------------------------------------------- |
+| Objectif | Prédire les compétences les plus demandées au Canada d’ici 2030 |
+| Données  | 100 000 offres d’emploi (Indeed, JobBank, LinkedIn)             |
+| Étapes   | Nettoyage → Tokenisation → Entraînement supervisé               |
+| Outils   | `transformers`, `accelerate`, GPU cloud                         |
+| Durée    | Plusieurs jours                                                 |
+| Coût     | Élevé (≈ 2 000 $ CAD sur GPU A100)                              |
+
+
+
+### 4.6 Gouvernance et sécurité (contexte canadien et nord-américain)
+
+#### Journalisation
+
+* Enregistrer : le **prompt**, la **version du modèle**, les **paramètres**, la **date** et le **coût**.
+* Exemple : conserver ces métadonnées dans un fichier CSV ou une base SQL.
+
+#### Sécurité et conformité
+
+* Respecter la **Loi 25** (Québec) et le **PIPEDA** (Canada).
+* Ne jamais envoyer de données personnelles (nom, NAS, adresse).
+* Héberger les données au Canada ou aux États-Unis (AWS Canada Central, Azure US East).
+* Mettre en place des **guardrails** : filtrage du ton, contrôle JSON, détection de contenu inapproprié.
+
+#### Évaluation continue
+
+* Tester régulièrement les réponses du modèle sur des cas pratiques :
+
+  * “Résume un article sur les startups en IA à Montréal.”
+  * “Explique les avantages de migrer vers AWS Bedrock pour une PME.”
+  * “Donne les 3 technologies IA les plus recherchées au Canada.”
+* Mesurer la cohérence, la clarté, la factualité, et la neutralité du ton.
+
+
+### 4.7 Mini-projet guidé (scénario techno-éducatif)
+
+**Objectif** : créer un assistant IA qui aide les étudiants à découvrir les carrières technologiques au Canada.
+
+**Étapes**
+
+1. Créer un dossier `docs/` avec :
+
+   * `emplois_ia_canada.txt`
+   * `salaires_devops_2024.txt`
+   * `fintech_montreal.txt`
+2. Construire des embeddings pour ces fichiers.
+3. Créer le prompt suivant :
+
+   ```
+   Contexte :
+   <<< contenu extrait >>>
+   Question : Quelles sont les 3 carrières en IA les plus prometteuses au Canada selon ces données ?
+   ```
+4. Appeler le modèle (GPT-4o, Claude 3, Gemini 1.5, Mistral).
+5. Ajuster la **température** (0.2 → 0.8) et observer les variations de ton et de créativité.
+
+
+
+### 4.8 À retenir
+
+* Commencer **simple** : Prompting → RAG → LoRA → Fine-tuning.
+* **Documenter** chaque test (prompts, modèles, paramètres, coûts).
+* Respecter les **lois canadiennes** sur les données personnelles.
+* Préférer des serveurs nord-américains pour les déploiements cloud.
+* **Mesurer et auditer** régulièrement les performances et la neutralité du modèle.
+* Penser “**carrière et innovation**” : chaque adaptation de modèle peut mener à un projet concret (ex. assistant d’embauche, moteur de recommandation, outil de veille technologique).
 
 **Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
 
+
+
+
+
+
+
+
 <br/>
+
+
+
 
 ## 5) Choisir un modèle et un service
 
