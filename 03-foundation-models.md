@@ -207,13 +207,12 @@ Portrait artistique d’un chercheur en IA devant un tableau de formules, style 
 
 
 
-
 ## 4) Entraînement, adaptation et gouvernance
 
 ### 4.1 Comprendre le cycle d’adaptation
 
-Les modèles d’IA comme GPT-4o, Claude 3, Gemini 1.5 ou Mistral 7B peuvent être **personnalisés progressivement** selon le projet sans devoir les réentraîner complètement.  
-On distingue quatre grands **niveaux d’adaptation**, du plus simple (prompting) au plus complexe (fine-tuning complet).
+Les modèles d’IA comme **GPT-4o**, **Claude 3**, **Gemini 1.5** ou **Mistral 7B** peuvent être **personnalisés progressivement** selon le projet sans devoir les réentraîner complètement.  
+On distingue quatre grands **niveaux d’adaptation**, du plus simple (**prompting**) au plus complexe (**fine-tuning complet**).
 
 | **Niveau** | **Méthode** | **Principe** | **Quand l’utiliser** | **Exemple concret (Canada/US)** |
 |-------------|-------------|---------------|----------------------|--------------------------------|
@@ -224,13 +223,14 @@ On distingue quatre grands **niveaux d’adaptation**, du plus simple (prompting
 
 
 
+<br/>
+
 ### 4.2 Étape 1 – Prompting (ingénierie d’instructions)
 
 C’est la méthode la plus simple et la plus courante : tout se joue dans le texte que vous envoyez au modèle.  
 Un bon prompt décrit clairement **le rôle**, **la tâche**, **le ton** et **le format** attendus.
 
-#### Exemple 1 : analyse d’opportunités économique
-
+#### Exemple 1 : analyse d’opportunités économiques
 
 ```
 Rôle : Analyste d'affaires.
@@ -258,47 +258,51 @@ Tâche : Crée un script Flask minimal pour recevoir et afficher un JSON envoyé
 
 
 
+
+<br/>
+
 ### 4.3 Étape 2 – RAG (Retrieval Augmented Generation)
 
-Le **RAG** permet de relier un modèle à **vos données réelles** : CV, rapports, sites, bases techniques.  
-Le modèle lit des extraits précis au lieu de deviner.
+Le **RAG** permet de relier un modèle à **vos données réelles** : CV, rapports, sites ou bases techniques.
+Le modèle ne “devine” plus, il lit des extraits précis fournis dans le contexte.
 
 #### Principe
-1. Convertir vos documents en **embeddings** (vecteurs numériques).  
-2. Rechercher les passages les plus pertinents selon la requête.  
+
+1. Convertir vos documents en **embeddings** (vecteurs numériques).
+2. Rechercher les passages les plus pertinents selon la requête.
 3. Injecter ces passages dans le prompt avant de générer la réponse.
 
-#### Exemple : assistant carrière canadien
+#### Exemple 1 : assistant carrière canadien
 
 ```
 Contexte :
 <<<
-Rapport de Emploi Québec : "Le salaire moyen en IA à Montréal a augmenté de 14 % entre 2021 et 2024."
-> > >
+Rapport d'Emploi Québec : "Le salaire moyen en IA à Montréal a augmenté de 14 % entre 2021 et 2024."
+>>>
 
 Question :
 Quelles régions canadiennes affichent la plus forte croissance des emplois IA ?
-
-```
-#### Exemple : documentation technique d’entreprise
 ```
 
+#### Exemple 2 : documentation technique d’entreprise
+
+```
 Contexte :
 <<<
 README du projet API-Analytics :
 
 * Endpoint : /v1/data
 * Authentification : Bearer token
-
-> > >
+>>>
 
 Question :
 Comment authentifier un utilisateur dans cette API ?
+```
 
-
-
-> ✅ **Avantage** : réponses fiables et basées sur vos sources locales.  
+> ✅ **Avantage** : réponses fiables et basées sur vos sources locales.
 > ⚠️ **Limite** : nécessite une petite base vectorielle (FAISS, Chroma ou Pinecone).
+
+<br/>
 
 
 
@@ -344,74 +348,116 @@ Il consiste à réentraîner tout le modèle sur des données spécifiques (souv
 
 
 
-### 4.6 Gouvernance et sécurité (contexte canadien et nord-américain)
+
+<br/>
+
+### 4.6 Gouvernance et sécurité (contexte nord-américain)
 
 #### Journalisation
 
-* Enregistrer : le **prompt**, la **version du modèle**, les **paramètres**, la **date** et le **coût**.
-* Exemple : conserver ces métadonnées dans un fichier CSV ou une base SQL.
+* Toujours enregistrer : le **prompt**, la **version du modèle**, les **paramètres**, la **date** et le **coût**.
+* Ces informations servent à comprendre les résultats et à contrôler les dépenses.
+* Exemple pratique : stocker ces métadonnées dans un fichier CSV ou une base SQL interne (`journal_ia.db`).
 
 #### Sécurité et conformité
 
-* Respecter la **Loi 25** (Québec) et le **PIPEDA** (Canada).
-* Ne jamais envoyer de données personnelles (nom, NAS, adresse).
-* Héberger les données au Canada ou aux États-Unis (AWS Canada Central, Azure US East).
-* Mettre en place des **guardrails** : filtrage du ton, contrôle JSON, détection de contenu inapproprié.
+* Respecter les lois locales : **Loi 25 (Québec)**, **PIPEDA (Canada)**, **CCPA (Californie)**, et **GDPR** si données européennes.
+* Ne jamais inclure de données personnelles (nom, NAS, adresse, numéro d’employé).
+* Héberger les données sur des serveurs **nord-américains** :
+
+  * **AWS Canada Central (Montréal)** pour la confidentialité
+  * **AWS US East (Virginie)** ou **Azure US Central** pour la performance et le coût
+* Ajouter des **guardrails** (garde-fous) :
+
+  * Filtrage du ton et des propos sensibles
+  * Contrôle du format de sortie (JSON strict)
+  * Vérification automatique des contenus inappropriés ou biaisés
 
 #### Évaluation continue
 
-* Tester régulièrement les réponses du modèle sur des cas pratiques :
+Tester régulièrement les modèles sur des cas réels du marché nord-américain :
 
-  * “Résume un article sur les startups en IA à Montréal.”
-  * “Explique les avantages de migrer vers AWS Bedrock pour une PME.”
-  * “Donne les 3 technologies IA les plus recherchées au Canada.”
-* Mesurer la cohérence, la clarté, la factualité, et la neutralité du ton.
+* “Résume un rapport sur la croissance des emplois en IA aux États-Unis.”
+* “Identifie les États américains où les salaires en data science sont les plus élevés.”
+* “Compare les opportunités en IA entre la Silicon Valley, Austin et Toronto.”
 
-
-### 4.7 Mini-projet guidé (scénario techno-éducatif)
-
-**Objectif** : créer un assistant IA qui aide les étudiants à découvrir les carrières technologiques au Canada.
-
-**Étapes**
-
-1. Créer un dossier `docs/` avec :
-
-   * `emplois_ia_canada.txt`
-   * `salaires_devops_2024.txt`
-   * `fintech_montreal.txt`
-2. Construire des embeddings pour ces fichiers.
-3. Créer le prompt suivant :
-
-   ```
-   Contexte :
-   <<< contenu extrait >>>
-   Question : Quelles sont les 3 carrières en IA les plus prometteuses au Canada selon ces données ?
-   ```
-4. Appeler le modèle (GPT-4o, Claude 3, Gemini 1.5, Mistral).
-5. Ajuster la **température** (0.2 → 0.8) et observer les variations de ton et de créativité.
-
-
-
-### 4.8 À retenir
-
-* Commencer **simple** : Prompting → RAG → LoRA → Fine-tuning.
-* **Documenter** chaque test (prompts, modèles, paramètres, coûts).
-* Respecter les **lois canadiennes** sur les données personnelles.
-* Préférer des serveurs nord-américains pour les déploiements cloud.
-* **Mesurer et auditer** régulièrement les performances et la neutralité du modèle.
-* Penser “**carrière et innovation**” : chaque adaptation de modèle peut mener à un projet concret (ex. assistant d’embauche, moteur de recommandation, outil de veille technologique).
-
-**Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
-
-
-
-
+Objectif : mesurer la **cohérence**, la **clarté**, la **factualité**, et la **neutralité** du ton.
 
 
 
 
 <br/>
 
+
+### 4.7 Mini-projet guidé – Assistant IA carrière nord-américaine
+
+**Objectif :** construire un assistant IA capable d’aider un chercheur d'emploie à identifier **les carrières technologiques les plus rentables au Canada et aux États-Unis**, selon les tendances récentes du marché.
+
+#### Étapes
+
+1. **Créer un dossier de travail `docs/`** contenant :
+
+   * `salaires_ia_canada_usa.txt` – données salariales par région (Glassdoor, Indeed, JobBank)
+   * `emplois_tech_usa_2024.txt` – offres d’emploi en IA, cloud, data
+   * `fintech_austin_toronto.txt` – statistiques et descriptions d’entreprises
+
+2. **Convertir les fichiers en embeddings** (représentations vectorielles) pour permettre au modèle de retrouver les passages les plus pertinents à partir d’une question utilisateur.
+   (Exemples de bibliothèques : **Chroma**, **FAISS**, ou **Pinecone**)
+
+3. **Créer le prompt suivant :**
+
+   ```
+   Contexte :
+   <<< contenu extrait >>>
+   Question :
+   Quelles sont les 3 carrières en intelligence artificielle les plus payantes au Canada et aux États-Unis selon ces données ?
+   ```
+
+4. **Interroger différents modèles IA** :
+
+   * GPT-4o (OpenAI)
+   * Claude 3 (Anthropic)
+   * Gemini 1.5 (Google)
+   * Mistral 7B ou Mixtral (open-source)
+
+5. **Ajuster la température de génération :**
+
+   * `0.2` → réponses précises, chiffrées et cohérentes
+   * `0.8` → réponses créatives et exploratoires (utiles pour conseils de carrière)
+
+6. **Comparer les résultats** et noter :
+
+   * Les différences de ton et de style
+   * Les métiers récurrents (ex. : *Machine Learning Engineer*, *Prompt Engineer*, *AI Product Manager*)
+   * Les villes les plus citées (San Francisco, Seattle, Austin, Toronto, Montréal, Boston)
+
+
+
+<br/>
+
+### 4.8 À retenir
+
+* Commencer **simple** : Prompting → RAG → LoRA → Fine-tuning.
+* **Documenter** chaque test : modèle utilisé, paramètres, coût, date, résultat.
+* Respecter les **réglementations canadiennes et américaines** (Loi 25, PIPEDA, CCPA).
+* Héberger les données sur des **serveurs nord-américains** (AWS Canada Central, AWS US East, Azure US Central).
+* **Vérifier et auditer** régulièrement les sorties du modèle (neutralité, exactitude).
+* **Observer les tendances du marché IA** :
+
+  * salaires les plus élevés → États-Unis (Californie, Texas, New York)
+  * montée rapide des postes en IA au **Canada** (Montréal, Toronto, Vancouver)
+* Chaque adaptation de modèle peut donner lieu à un **projet professionnel concret** :
+
+  * assistant d’orientation carrière IA,
+  * moteur de recommandation d’offres d’emploi,
+  * tableau de bord d’analyse des salaires technologiques.
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
 
 
