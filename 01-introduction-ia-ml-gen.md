@@ -68,7 +68,7 @@
 
 **Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
 
----
+<br/>
 
 ## 4) Entrées et sorties : données, consignes, formats
 
@@ -88,75 +88,313 @@
 
 **Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
 
----
+<br/>
 
-## 5) Paramètres de génération : effets clés
+## 5) Paramètres de génération : comprendre avec des exemples simples
 
-* **Température** : contrôle la **diversité**.
+Quand tu utilises une IA générative (comme ChatGPT, DALL·E ou un autre modèle), tu peux **changer son comportement** grâce à quelques **paramètres essentiels**.
+Voici ceux que tu dois connaître — avec **des explications faciles et des exemples concrets.**
 
-  * Basse (≈ 0–0.3) → plus déterministe, utile pour du **factuel** et du **format strict**.
-  * Haute (≈ 0.7–1.0+) → plus variée, adaptée au **créatif**.
-* **Top-p / Top-k** : restreignent les choix du prochain token.
-* **Max tokens** (sortie) : **borne** la longueur de la réponse.
-* **Stop sequences** : séquences qui **arrêtent** la génération.
 
-**Règle simple :**
 
-* Besoin **précis/factuel** → température **basse**, format **strict**.
-* Besoin **créatif/exploratoire** → température **plus haute**, contraintes **souples**.
+### 5.1 Température — “plus froid” ou “plus chaud”
+
+**Ce que ça fait :**
+La *température* règle le **niveau de créativité** ou de **variabilité** des réponses.
+
+| Température   | Effet                                     | Exemple                                                                                                                                      |
+| ------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| **0.0 → 0.3** | Réponse très précise, presque “robotique” | Demande : “Donne-moi la capitale du Japon.” → Réponse : “Tokyo.”                                                                             |
+| **0.7 → 1.0** | Réponse plus libre, imaginative           | Demande : “Décris la capitale du Japon.” → Réponse : “Tokyo, une ville où la tradition et la technologie se croisent sous un ciel de néons.” |
+
+> **Astuce :**
+>
+> * Pour du **factuel** → garde la température **basse (0.1–0.3)**
+> * Pour du **créatif** (idées, design, textes libres) → monte-la à **0.8–1.0**
+
+
+
+### 5.2 Top-p et Top-k — “choix dans le vocabulaire”
+
+Ces paramètres servent à **limiter le nombre de mots possibles** que l’IA peut choisir à chaque étape.
+
+* **Top-k** = “Je choisis parmi les *k* mots les plus probables.”
+  → Si `k=1`, elle est ultra stricte. Si `k=50`, elle peut improviser un peu plus.
+
+* **Top-p** = “Je prends seulement les mots qui cumulent *p %* de probabilité.”
+  → Si `p=0.9`, on garde les mots les plus logiques. Si `p=1.0`, tout est permis.
+
+**Exemple concret :**
+Tu veux un poème court sur le café.
+
+| Réglage                      | Résultat                                                |
+| ---------------------------- | ------------------------------------------------------- |
+| `temperature=0.2, top_p=0.8` | “Le café chaud sur la table du matin.”                  |
+| `temperature=0.9, top_p=1.0` | “Dans la vapeur dorée, un rêve se verse dans la tasse.” |
+
+
+
+### 5.3 Max tokens — “la taille de la réponse”
+
+**Ce que ça fait :**
+Ce paramètre limite **la longueur du texte que l’IA peut écrire.**
+
+| Exemple            | Résultat                                          |
+| ------------------ | ------------------------------------------------- |
+| `max_tokens = 50`  | Réponse courte : “Le soleil brille sur la ville.” |
+| `max_tokens = 500` | Réponse longue : texte complet ou article entier. |
+
+> **Astuce :**
+>
+> * Pour un résumé ou une définition → **100–300 tokens**
+> * Pour un article ou un plan complet → **500–1000 tokens**
+
+
+
+### 5.4 Stop sequences — “le frein d’urgence”
+
+**Ce que ça fait :**
+Tu peux dire à l’IA : **“arrête d’écrire quand tu vois cette phrase.”**
+
+**Exemple concret :**
+
+```json
+"stop_sequences": ["### FIN"]
+```
+
+**Prompt :**
+
+```
+Donne-moi 3 étapes pour faire un gâteau.
+Termine chaque étape sur une nouvelle ligne.
+Quand tu as fini, écris “### FIN”.
+```
+
+→ L’IA s’arrête **exactement** à “### FIN”, sans continuer.
+
+
+
+### 5.5 Résumé express (à retenir)
+
+| Situation        | Réglage conseillé                                                        |
+| ---------------- | ------------------------------------------------------------------------ |
+| Fiche factuelle  | `temperature=0.2`, `top_p=0.8`, `max_tokens=200`                         |
+| Résumé d’article | `temperature=0.3`, `top_p=0.9`, `max_tokens=500`                         |
+| Idées créatives  | `temperature=0.9`, `top_p=1.0`, `max_tokens=700`                         |
+| JSON structuré   | `temperature=0.1`, `top_p=0.8`, `max_tokens=400`, `stop_sequences=["}"]` |
+
+
+
+## 6) Qualité et vérifications — comment savoir si ta sortie est “bonne”
+
+### 6.1 Les 5 questions à se poser
+
+1. **Est-ce que la réponse correspond à la question ?**
+
+   > Tu demandes “Qu’est-ce qu’un volcan ?”
+   > ❌ L’IA parle de la Lune → *hors sujet*
+   > ✅ Elle parle de lave, cratère, éruption → *pertinent*
+
+2. **Est-ce que c’est vrai ?**
+
+   > Vérifie sur une source fiable (Wikipedia, dictionnaire, article scientifique).
+
+3. **Est-ce que c’est clair ?**
+
+   > Les phrases sont simples, structurées, et pas trop longues.
+
+4. **Est-ce que le format est respecté ?**
+
+   > Si tu as demandé “5 puces”, il doit y avoir **5 puces**.
+
+5. **Est-ce que la réponse est traçable ?**
+
+   > Si l’IA invente, fais-lui préciser :
+   > *“Si tu n’es pas sûr, dis-le.”*
+
+
+
+### 6.2 Exemples de vérification simple
+
+| Cas             | Mauvais                                | Bon                        |
+| --------------- | -------------------------------------- | -------------------------- |
+| **Résumé**      | Trop long, 200 mots au lieu de 100     | 5 phrases claires, 90 mots |
+| **Format JSON** | Fichiers invalides ou champs manquants | JSON valide et complet     |
+| **Tonalité**    | Trop familière ou ironique             | Ton neutre, professionnel  |
+| **Sources**     | “Je pense que…” (sans référence)       | “Selon NASA (2023)…”       |
+
+
+<br/>
+
+## 7) Limites, risques et solutions (avec exemples simples)
+
+### 7.1 Hallucinations — quand l’IA invente
+
+> **Exemple :**
+> “Le président du Canada en 2023 était *Justin Bieber*.” ❌
+> C’est une **hallucination** (réponse fausse mais dite avec assurance).
+
+**Que faire :**
+
+* Ajouter un **contexte clair** (“Réponds uniquement à partir de ce texte : …”).
+* Exiger **des sources**.
+* Baisser la **température**.
+
+
+
+### 7.2 Biais et stéréotypes
+
+> **Exemple :**
+> “Les programmeurs sont toujours des hommes.” ❌
+> Réponse biaisée.
+
+**Que faire :**
+
+* Formuler : “Donne une réponse **inclusive et neutre**.”
+* Relire et **supprimer** tout mot discriminant.
+
+
+
+### 7.3 Confidentialité
+
+> **Exemple :**
+> “Voici les coordonnées de M. Dupont : 514-…” ❌
+> → Donnée privée.
+
+**Que faire :**
+
+* Masquer ou remplacer par `[Nom]`, `[Téléphone]`.
+* Ne **jamais** coller d’information personnelle dans un prompt.
+
+
+
+### 7.4 Dépendance au modèle
+
+> **Exemple :**
+> “Je ne peux pas répondre sans GPT-5.”
+> → Tu deviens dépendant d’un modèle précis.
+
+**Que faire :**
+
+* **Sauvegarde** tes prompts et exemples dans un fichier.
+* **Teste** avec plusieurs modèles pour comparer les résultats.
+
+
+
+### 7.5 Coût et lenteur
+
+> **Exemple :**
+> Tu demandes : “Écris-moi 10 000 idées pour une start-up.”
+> → Résultat : très long, très cher, peu utile.
+
+**Que faire :**
+
+* Limiter la taille (`max_tokens`).
+* Demander d’abord **5 idées**, puis approfondir **une seule**.
+
+
+
+### 7.6 Résumé en 3 phrases
+
+1. Plus tu précises les **paramètres**, plus l’IA est prévisible.
+2. Plus tu expliques ce que tu veux, plus la réponse est **fiable et claire**.
+3. Vérifie toujours : **pertinence, exactitude, clarté, respect du format**.
 
 **Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
 
----
 
-## 6) Qualité et vérifications
-
-### 6.1 Critères
-
-* **Pertinence** par rapport à la demande.
-* **Fidélité** aux sources/contexte.
-* **Clarté** et **structure**.
-* **Concision** et respect des contraintes.
-* **Traçabilité** (références, incertitudes).
-
-### 6.2 Vérifications
-
-* **Automatiques** : schéma JSON, longueur, mots à exclure.
-* **Humaines** : relecture, contrôle factuel sur source fiable.
-* **Échantillonnage** : tester plusieurs cas typiques.
-
-**Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
-
----
-
-## 7) Limites, risques et mesures
-
-* **Hallucinations** → ajouter du **contexte**, exiger références, baisser la température.
-* **Biais / stéréotypes** → tester des cas variés, expliciter les limites.
-* **Confidentialité** → retirer/masquer les données sensibles ; limiter la journalisation.
-* **Dépendance au modèle** → conserver consignes et jeux d’essai, documenter les versions.
-* **Coût / latence** → réduire taille de contexte et longueur de sortie, réutiliser les résultats stables.
-
-**Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
-
----
+<br/>
 
 ## 8) Exemples concrets (texte, code, résumé, Q&A)
 
+Cette partie montre **comment donner une bonne consigne (entrée)** et **ce que l’IA doit produire (sortie)**.
+Chaque exemple peut être **copié et modifié** pour s’entraîner.
+
+
+
 ### 8.1 Variations d’exercice
+
+
 
 * **Entrée** : énoncé, niveau visé, contraintes (sans solution, durée ≤ 10 min).
 * **Sortie** : 3 variantes (facile / moyen / difficile) en liste numérotée.
+
+
+> **Objectif :** voir comment une même consigne peut donner trois niveaux de difficulté.
+
+**Entrée**
+
+```
+Explique ce qu’est l’intelligence artificielle en 5 lignes maximum.
+```
+
+**Sortie attendue**
+
+1. *(Facile)* L’intelligence artificielle, ou IA, est quand une machine imite l’intelligence humaine.
+2. *(Moyen)* L’IA regroupe des programmes capables d’apprendre à partir de données pour accomplir des tâches sans être explicitement programmés.
+3. *(Difficile)* L’IA désigne l’ensemble des méthodes permettant à une machine d’acquérir des capacités cognitives (raisonnement, perception, décision) grâce à l’apprentissage automatique et profond.
+
+> **Astuce :** toujours demander plusieurs variantes pour comparer et comprendre le niveau de détail.
+
 
 ### 8.2 Résumé court
 
 * **Entrée** : passage long + consigne “5 puces, ≤ 120 mots, citer 2 limites”.
 * **Sortie** : 5 puces + 2 limites, sans opinion gratuite.
 
+
+> **Objectif :** transformer un texte long en résumé clair et concis.
+
+**Entrée**
+
+```
+Voici un article de 200 mots sur l’énergie solaire. Résume-le en 5 puces, maximum 120 mots, et cite 2 limites de cette technologie.
+```
+
+**Sortie attendue**
+
+```
+• L’énergie solaire provient de la conversion directe du rayonnement du soleil en électricité.  
+• Les panneaux photovoltaïques sont la technologie la plus utilisée.  
+• Elle réduit les émissions de CO₂ et la dépendance aux combustibles fossiles.  
+• La production dépend de l’ensoleillement et du stockage disponible.  
+• Les coûts baissent régulièrement grâce à l’innovation.  
+Limites : production intermittente ; recyclage des panneaux encore complexe.
+```
+
+> **Astuce :** un bon résumé doit tenir sur **une demi-page**, sans phrases d’introduction inutiles.
+
+
+
+
 ### 8.3 Q&A cadré
 
 * **Entrée** : question + **extrait** de référence.
 * **Sortie** : réponse en 3–5 phrases + mention “*Réponse basée sur l’extrait fourni*”.
+
+
+> **Objectif :** apprendre à répondre **à partir d’un extrait précis**, sans inventer.
+
+**Entrée**
+
+```
+Extrait :
+"Les plantes utilisent la photosynthèse pour transformer la lumière du soleil en énergie chimique."
+
+Question :
+Comment les plantes produisent-elles leur énergie ?
+```
+
+**Sortie attendue**
+
+```
+Les plantes produisent leur énergie grâce à la photosynthèse. 
+Elles transforment la lumière du soleil en énergie chimique stockée dans leurs cellules.
+*Réponse basée sur l’extrait fourni.*
+```
+
+> **Astuce :** répéter la phrase *« Réponse basée sur l’extrait fourni »* pour éviter les réponses inventées.
+
 
 ### 8.4 Gabarit d’instruction universel
 
@@ -170,9 +408,58 @@ Exemples : <optionnel : 1–2 mini-démos>
 Paramètres recommandés : température 0.2–0.4 pour factuel ; 0.7 pour créatif.
 ```
 
+
+> **Ce modèle fonctionne pour TOUT : texte, code, résumé, tableau, image, etc.**
+
+```
+Rôle : Tu es un rédacteur clair et exact.  
+Contexte : <donne ici les informations de base nécessaires>  
+Tâche : Produis <le type de résultat> couvrant <les points indispensables>.  
+Format : <texte | liste à puces | tableau | JSON>  
+Contraintes : longueur, ton, langue, références si incertitude.  
+Exemple : <1 ou 2 mini-démos si tu veux guider le style>  
+Paramètres : température 0.2–0.4 pour un ton factuel ; 0.7 pour un ton plus créatif.
+```
+
+**Exemple concret d’utilisation**
+
+```
+Rôle : Tu es un professeur de sciences.  
+Contexte : cours de biologie niveau secondaire.  
+Tâche : Rédige 3 questions à choix multiples sur la photosynthèse.  
+Format : liste numérotée.  
+Contraintes : 1 seule bonne réponse par question, pas de vocabulaire avancé.  
+Paramètres : température 0.3.
+```
+
+**Sortie**
+
+```
+1. Quelle est la principale source d’énergie des plantes ?  
+   a) L’eau b) Le soleil c) L’oxygène → **b)**  
+2. Quel gaz les plantes absorbent-elles pour faire la photosynthèse ?  
+   a) CO₂ b) O₂ c) Azote → **a)**  
+3. Que libèrent-elles dans l’air après la photosynthèse ?  
+   a) Hydrogène b) Oxygène c) Azote → **b)**
+```
+
+> **Astuce finale :** plus ta consigne est claire, plus le résultat de l’IA sera juste.
+> Évite les phrases vagues comme “Fais-moi un bon texte sur la nature” — précise **le but, la forme et la longueur.**
+
+
+
+
+
 **Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
 
----
+
+
+
+
+
+
+
+<br/>
 
 ## 9) Exercices et livrables rapides
 
