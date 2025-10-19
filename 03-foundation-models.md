@@ -377,4 +377,4 @@ Sortie : plan final + journal condensé (1 ligne/étape)
 **Navigation** — ↩︎ [Revenir au plan](#plan-de-matière)
 
 ```
-```
+
