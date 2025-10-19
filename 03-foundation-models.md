@@ -254,6 +254,7 @@ Tâche : Crée un script Flask minimal pour recevoir et afficher un JSON envoyé
 ```
 
 > ✅ **Avantage** : immédiat, accessible à tous, aucun coût d’entraînement.  
+
 > ⚠️ **Limite** : le modèle oublie vos préférences si vous ne les redonnez pas à chaque fois.
 
 
@@ -300,6 +301,7 @@ Comment authentifier un utilisateur dans cette API ?
 ```
 
 > ✅ **Avantage** : réponses fiables et basées sur vos sources locales.
+
 > ⚠️ **Limite** : nécessite une petite base vectorielle (FAISS, Chroma ou Pinecone).
 
 <br/>
@@ -326,6 +328,7 @@ lora_model = get_peft_model(model, config)
 ````
 
 > ✅ **Avantage** : rapide, local, idéal pour adapter un modèle bilingue FR/EN.
+
 > ⚠️ **Limite** : demande un GPU et un minimum de savoir-faire en IA appliquée.
 
 
