@@ -1,4 +1,6 @@
-# Pratique
+# Pratique 1
+
+*Fichier : `02-pratique-introduction-ia-ml-gen.md`*
 
 **Durée totale : 3 heures**
 **Barème total : 100 points**
