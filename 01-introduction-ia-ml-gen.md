@@ -93,7 +93,7 @@
 ## 5) Paramètres de génération : comprendre avec des exemples simples
 
 Quand tu utilises une IA générative (comme ChatGPT, DALL·E ou un autre modèle), tu peux **changer son comportement** grâce à quelques **paramètres essentiels**.
-Voici ceux que tu dois connaître — avec **des explications faciles et des exemples concrets.**
+
 
 
 
