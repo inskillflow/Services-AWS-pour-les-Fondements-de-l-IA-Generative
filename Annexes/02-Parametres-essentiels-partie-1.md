@@ -361,3 +361,34 @@ Format <width>×<height>. Générer <variants> variantes.
 * Si c’est **trop sec** : augmente légèrement **p** (0.9) ou **k** (50).
 * Si ça **divague** : baisse **p** (0.7–0.8) ou **k** (20).
 
+
+
+# Annexe 2
+
+- **“top-k = 40”** est juste un **repère pratique** (pas magique) : on limite le choix aux **40 tokens les plus probables** à chaque pas. 
+
+### Que signifie k=40 ?
+
+* À chaque mot, le modèle **regarde seulement les 40 meilleurs candidats** puis échantillonne dedans.
+* Si la distribution est “raide” (très concentrée), **il n’y a parfois même pas 40 candidats plausibles** → l’effet est quasi nul.
+* Si elle est “plate”, k=40 **évite d’aller trop loin** dans les queues (moins de divagations que k=200).
+
+### Quand utiliser quels k ?
+
+| Objectif                  | Réglage conseillé        | Effet                              |
+| ------------------------- | ------------------------ | ---------------------------------- |
+| Réponse factuelle, stable | **T=0.2, top-k=20–50**   | Peu de créativité, cohérence forte |
+| Chat naturel contrôlé     | **T=0.5, top-k=40–80**   | Fluide, peu d’erreurs              |
+| Créatif (story, idées)    | **T=0.7, top-k=100–200** | Plus de variété, plus de risque    |
+
+### Par rapport à top-p
+
+* Utilise **l’un ou l’autre** (ou l’intersection si ta lib le permet).
+* **Équivalence grosso modo** : *top-p=0.9* ≈ *top-k autour de 40–80* (dépend de la distribution).
+* Si tu veux un **seul bouton** : prends **top-p=0.85–0.9** et laisse **k désactivé**.
+
+### Raccourci pratique
+
+* “Je veux du **sobre**” → **T=0.2 + top-k=40** (ou **top-p=0.85**).
+* “Trop sec ?” → monte **k** (→60–80) ou **p** (→0.9).
+* “Ça divague ?” → baisse **k** (→20–30) ou **p** (→0.8).
