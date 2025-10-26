@@ -1,4 +1,4 @@
-# Correction — Pratique 1
+# Correction — Pratique 2
 
 ## PARTIE 1 — COMPRÉHENSION THÉORIQUE (20 pts)
 
