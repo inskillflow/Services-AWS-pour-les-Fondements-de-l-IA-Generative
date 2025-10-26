@@ -392,3 +392,36 @@ Format <width>×<height>. Générer <variants> variantes.
 * “Je veux du **sobre**” → **T=0.2 + top-k=40** (ou **top-p=0.85**).
 * “Trop sec ?” → monte **k** (→60–80) ou **p** (→0.9).
 * “Ça divague ?” → baisse **k** (→20–30) ou **p** (→0.8).
+* 
+
+
+
+<br/>
+
+# Annexe 3
+
+
+
+* **top-p** s’exprime en **probabilité** → une **valeur entre 0 et 1** (ex. 0.85 = 85 % de masse de proba cumulée).
+* **top-k** n’est **pas un pourcentage** : c’est un **nombre entier** de candidats gardés (ex. k=40 = 40 tokens les plus probables).
+
+### Mémo visuel
+
+| Paramètre        | Unité  | Ce que ça garde                                           | Intuition                                 |
+| ---------------- | ------ | --------------------------------------------------------- | ----------------------------------------- |
+| **top-p = 0.80** | 0–1    | Tous les mots jusqu’à atteindre **80 %** de proba cumulée | Taille **variable** selon la distribution |
+| **top-p = 0.90** | 0–1    | ~90 % de la masse                                         | Plus large que 0.80                       |
+| **top-k = 20**   | entier | **20** mots les plus probables                            | Taille **fixe** (toujours 20)             |
+| **top-k = 40**   | entier | **40** mots les plus probables                            | Plus de variété que k=20                  |
+
+### Équivalences (approximatives, pour se repérer)
+
+* Si la distribution est **concentrée** (un mot domine), **top-p=0.9** ≈ **top-k très petit** (souvent 2–5).
+* Si elle est **étalée**, **top-p=0.9** peut correspondre à **top-k** beaucoup plus grand (souvent 30–80).
+  ➡️ Donc on ne convertit pas **p → %** pour **k** : **p** vise une **part de probabilité**, **k** un **compteur** de mots.
+
+### Raccourci pratique
+
+* Réponses stables : **T=0.2 + top-p=0.85** *(ou)* **top-k=40**.
+* Un seul bouton ? Choisis **top-p (0.85–0.9)** et laisse **k** désactivé.
+
