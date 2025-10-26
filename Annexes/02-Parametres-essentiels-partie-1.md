@@ -337,4 +337,27 @@ Format <width>×<height>. Générer <variants> variantes.
 
 > T-P-L-S-F-C-V — pense “**Tu Peux Lire Sans Faire d’erreurs Constatées & Validées**”.
 
--
+
+
+<br/>
+
+# Annexe - Mémo ultra-court
+
+* **top-k** = on ne garde que **k** mots les plus probables.
+* **top-p** = on garde les mots jusqu’à atteindre une **probabilité cumulée p**.
+
+### Exemples concrets (les probabilités d’un prochain mot)
+
+| Situation                  | Distribution (triée)                                                         | **top-k (k=3)** → mots gardés | **top-p (p=0.8)** → mots gardés                                          | Pourquoi c’est différent                                                         |
+| -------------------------- | ---------------------------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| **1. Classique**           | le 0.40, la 0.20, un 0.15, des 0.10, ce 0.08, pour 0.04, dans 0.03 (somme=1) | **le, la, un**                | **le, la, un, des** (0.40+0.20+0.15=0.75 < 0.8 ⇒ on ajoute *des* → 0.85) | top-p s’adapte et prend 4 mots pour dépasser 0.8, top-k reste fixé à 3.          |
+| **2. Pic très fort**       | X 0.70, Y 0.10, Z 0.08, W 0.05, …                                            | **X, Y, Z**                   | **X, Y** (0.70+0.10=0.80 pile)                                           | Avec un mot ultra-probable, **top-p** peut garder **moins** d’options que top-k. |
+| **3. Répartition “plate”** | a 0.18, b 0.17, c 0.16, d 0.15, e 0.14, f 0.10, g 0.10                       | **a, b, c**                   | **a, b, c, d, e** (cumul = 0.80)                                         | Quand tout est assez probable, **top-p** garde **plus** de mots que top-k.       |
+
+### Règles pratiques
+
+* **T (température)** contrôle l’aléa global ; **top-k/top-p** contrôlent **l’éventail** de choix.
+* Pour réponses **stables** : T basse (≈0.2) + **top-p 0.8–0.9** *ou* **top-k 40**.
+* Si c’est **trop sec** : augmente légèrement **p** (0.9) ou **k** (50).
+* Si ça **divague** : baisse **p** (0.7–0.8) ou **k** (20).
+
