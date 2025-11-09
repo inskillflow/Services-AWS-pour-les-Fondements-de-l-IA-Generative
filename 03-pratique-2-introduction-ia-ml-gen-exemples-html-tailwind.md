@@ -177,3 +177,106 @@ Rôle de **`text-base`**, **`text-2xl`**, **`font-semibold`**, **`leading-relaxe
 Que permettent **`hover:`**, **`focus:`**, **`active:`**, **`disabled:`** et quel est **l’ordre de priorité** / chevauchement attendu ?
 *(Écris ici tes 6 prompts A→F.)*
 
+
+
+<br/>
+
+# Annexe 1
+
+
+
+<br/>
+
+# Annexe 2 - exemples de réponses - Corrigé Q1 — Balises sémantiques
+
+## Test A — très factuel, court (1 phrase, 25–40 mots)
+
+**Réponse A (modèle)**
+`<header>` annonce l’en-tête, `<nav>` regroupe la navigation, `<section>` organise un bloc thématique, `<footer>` clôt la zone ; on **évite `<div>`** quand une balise sémantique décrit déjà le rôle attendu pour structure, accessibilité et SEO.
+
+**Pourquoi c’est correct (justification)** : une seule phrase, vocabulaire simple, différencie clairement les rôles et énonce la règle d’évitement de `<div>` pour raisons structurelles/a11y/SEO.
+
+**Paramètres suggérés**
+
+| Test | temperature | max_tokens | top_p | frequency_penalty | presence_penalty | But attendu          |
+| ---- | ----------: | ---------: | ----: | ----------------: | ---------------: | -------------------- |
+| A    |         0.1 |         90 |   1.0 |               0.0 |              0.0 | Très factuel, concis |
+
+
+
+## Test B — factuel, développé (120–160 mots, sans listes)
+
+**Réponse B (modèle)**
+En HTML, les balises sémantiques décrivent le **rôle** d’une zone. `<header>` présente l’en-tête d’une page ou d’une section, souvent avec titre, logo et éléments d’introduction. `<nav>` regroupe des liens de **navigation** cohérents menant vers des pages, ancres ou catégories. `<section>` segmente le contenu en parties **thématiques** ayant un en-tête pertinent, indépendamment de la disposition visuelle. `<footer>` termine une page ou un bloc avec des informations de **pied** : mentions, auteur, liens de contexte. Employer ces balises améliore la **structure du document**, facilite la compréhension par les technologies d’**accessibilité** (repères ARIA implicites, navigation par régions) et fournit des **signaux** clairs aux moteurs de recherche, bénéfiques pour l’indexation et l’**SEO**. On évite `<div>` lorsque l’une de ces balises exprime précisément l’intention, car `<div>` n’apporte pas de **sens** et dilue l’architecture sémantique, ce qui nuit à la robustesse et à la réutilisabilité.
+
+**Justification** : 140–150 mots environ, ton académique, couvre structure/a11y/SEO, pas de listes, pas de digressions.
+
+**Paramètres suggérés**
+
+| Test | temperature | max_tokens | top_p | frequency_penalty | presence_penalty |
+| ---- | ----------: | ---------: | ----: | ----------------: | ---------------: |
+| B    |         0.1 |        230 |   1.0 |               0.0 |              0.0 |
+
+
+
+## Test C — bref + nuance (1 phrase, 30–50 mots)
+
+**Réponse C (modèle)**
+`<header>`, `<nav>`, `<section>` et `<footer>` indiquent respectivement en-tête, navigation, bloc thématique et pied ; **nuance** : `<div>` ne porte **aucun sens** et doit être réservé aux cas où **aucune** balise sémantique ne correspond précisément.
+
+**Justification** : une phrase, 35–45 mots, ajoute explicitement la nuance demandée sur `<div>`.
+
+**Paramètres suggérés**
+
+| Test | temperature | max_tokens | top_p | frequency_penalty | presence_penalty |
+| ---- | ----------: | ---------: | ----: | ----------------: | ---------------: |
+| C    |         0.5 |        120 |   0.9 |               0.0 |              0.1 |
+
+
+
+## Test D — créatif mais court (1 phrase, 25–40 mots)
+
+**Réponse D (modèle)**
+Pense la page comme un journal : `<header>` ouvre, `<nav>` oriente, `<section>` raconte, `<footer>` conclut ; **remplace** le `<div>` générique dès qu’une balise **porte le sens** attendu, sinon l’histoire perd ses repères.
+
+**Justification** : métaphore brève, reste précis sur le sens, aucune liste, une seule phrase.
+
+**Paramètres suggérés**
+
+| Test | temperature | max_tokens | top_p | frequency_penalty | presence_penalty |
+| ---- | ----------: | ---------: | ----: | ----------------: | ---------------: |
+| D    |         0.9 |        100 |   1.0 |               0.2 |              0.0 |
+
+
+
+## Test E — créatif, développé (150–200 mots, sans listes, avec contre-exemple)
+
+**Réponse E (modèle)**
+Une page lisible commence par des **repères** solides : `<header>` installe l’identité et le cadre d’une page ou d’une partie, `<nav>` rassemble les trajets utiles, `<section>` isole un **sujet** cohérent assorti d’un titre, `<footer>` referme le périmètre avec les informations de contexte. Ces balises n’imposent pas un style ; elles **déclarent** une intention que les lecteurs d’écran reconnaissent immédiatement, ce qui fluidifie la navigation par régions et améliore l’**accessibilité**. Elles constituent aussi des **signaux** clairs pour les moteurs de recherche, qui interprètent mieux l’organisation du contenu, donc un bénéfice indirect pour l’**SEO**. **Contre-exemple** : envelopper un menu principal dans un simple `<div>` prive l’utilisateur de repères de navigation, alors qu’un `<nav>` aurait exposé son rôle. Le principe est simple : employer les balises sémantiques lorsqu’elles décrivent **exactement** le rôle prévu et réserver `<div>` aux cas où **aucune** balise nommée ne convient, afin de préserver une architecture de document stable et durable.
+
+**Justification** : 170–190 mots, compare à `<div>`, mentionne accessibilité/SEO, inclut un contre-exemple concret, pas de listes.
+
+**Paramètres suggérés**
+
+| Test | temperature | max_tokens | top_p | frequency_penalty | presence_penalty |
+| ---- | ----------: | ---------: | ----: | ----------------: | ---------------: |
+| E    |         0.9 |        240 |   1.0 |               0.0 |              0.1 |
+
+
+
+## Test F — créatif + éviter répétitions (150–200 mots)
+
+**Réponse F (modèle)**
+Dans une maquette, on peut **changer** les couleurs sans toucher au **sens** ; c’est exactement ce que permettent `<header>`, `<nav>`, `<section>` et `<footer>` : fixer des **repères** stables que le CSS habille ensuite. Un document gagne alors en **navigabilité** : le lecteur d’écran saute d’un repère à l’autre, l’outil d’analyse comprend l’ossature, et l’équipe conserve un langage commun. À l’inverse, empiler des `<div>` pour « faire pareil » brouille le rôle des zones, complique les tests et fragilise les refactorings. Mauvaise pratique fréquente : utiliser `<section>` sans **en-tête** pertinent ; on y préfère un simple `<div>` si aucun titre ne **qualifie** le contenu, afin d’éviter une sémantique **vide**. Règle opératoire : choisir la balise qui **nomme** le rôle réel de la zone et ne recourir à `<div>` qu’en absence d’équivalent sémantique, ce qui pérennise l’accessibilité, la qualité éditoriale et la maintenance.
+
+**Justification** : style varié, idées nouvelles (titre requis pour `<section>`), mention d’une mauvaise pratique, évite la redite, 160–190 mots.
+
+**Paramètres suggérés**
+
+| Test | temperature | max_tokens | top_p | frequency_penalty | presence_penalty |
+| ---- | ----------: | ---------: | ----: | ----------------: | ---------------: |
+| F    |        0.95 |        260 |  0.85 |               0.3 |              0.3 |
+
+
+
+
