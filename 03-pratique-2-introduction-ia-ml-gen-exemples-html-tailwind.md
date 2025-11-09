@@ -126,6 +126,27 @@
 Explique la différence entre **`<header>`**, **`<nav>`**, **`<section>`**, **`<footer>`** et indique **quand éviter `<div>`** à la place.
 *(Écris ici tes 6 prompts A→F, en respectant les formats ci-dessus.)*
 
+
+> Pour chacun des prompts, estimez les paramètres qui ont été utilisés (vous n'êtes pas obligés d'être très précis)
+
+Prompt A : 
+
+| Test | temperature | max_tokens | top_p | frequency_penalty | presence_penalty | But attendu                     |
+| ---- | ----------- | ---------- | ----: | ----------------: | ---------------: | ------------------------------- |
+| A    | ...         | ...         |   ... |               ... |              ... | Très factuel, concis (1 phrase) |
+
+
+Prompt B : 
+
+| Test | temperature | max_tokens | top_p | frequency_penalty | presence_penalty | But attendu                     |
+| ---- | ----------- | ---------- | ----: | ----------------: | ---------------: | ------------------------------- |
+| A    | ...         | ...         |   ... |               ... |              ... | Très factuel, concis (1 phrase) |
+
+etc...
+
+
+
+
 ### Q2 — Tailwind : spacing
 
 Différence entre **`m-4`**, **`mx-4`**, **`my-4`**, **`mt-4`** ; donner **un cas concret d’utilisation**.
