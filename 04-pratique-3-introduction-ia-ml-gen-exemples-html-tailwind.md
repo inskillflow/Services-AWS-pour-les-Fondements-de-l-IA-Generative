@@ -1,4 +1,4 @@
-# Question unique — Tailwind : Flex vs Grid
+# Question de l'examen — Tailwind : Flex vs Grid
 
 **Énoncé** : Expliquez **quand privilégier** `flex` / `flex-col` **vs** `grid grid-cols-…` et proposez **un critère simple** de choix.
 
