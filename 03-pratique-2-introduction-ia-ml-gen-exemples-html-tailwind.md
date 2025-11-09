@@ -1,4 +1,4 @@
-# EXAMEN — Rédaction de prompts évalués (HTML & Tailwind)
+# Pratique 2 — Rédaction de prompts (HTML & Tailwind)
 
 ## 0) Rappel des paramètres (à connaître)
 
