@@ -88,10 +88,19 @@
 
 
 
+# Questions : 
 
 
+Pour chaque question : 
 
+- Écris un prompt “**Test A**”,“**Test B**”, “**Test C**”, “**Test D**”, “**Test E**”n “**Test F**”
 
-
+1. **Balises sémantiques :** Explique la différence entre `<header>`, `<nav>`, `<section>` et `<footer>` et indique quand éviter `<div>` à la place.
+2. **Tailwind — spacing :** Différence entre `m-4`, `mx-4`, `my-4`, `mt-4` ; donne un cas concret d’utilisation.
+3. **Tailwind — responsive :** Que font les préfixes `sm:`, `md:`, `lg:`, `xl:` et comment sont-ils évalués (mobile-first) ?
+4. **Tailwind — Flex vs Grid :** Quand privilégier `flex`/`flex-col` vs `grid grid-cols-…` ? Donne un critère simple.
+5. **Couleurs & thème :** Explique l’intérêt de `text-slate-700` vs `text-gray-700` et l’usage de `dark:`.
+6. **Typographie :** Rôle de `text-base`, `text-2xl`, `font-semibold`, `leading-relaxed`, `tracking-wide`.
+7. **Utilitaires conditionnels :** Que permet `hover:`, `focus:`, `active:`, `disabled:` et l’ordre de priorité.
 
 
