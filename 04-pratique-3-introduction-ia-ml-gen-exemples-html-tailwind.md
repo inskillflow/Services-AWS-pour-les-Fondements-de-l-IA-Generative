@@ -148,9 +148,9 @@
 
 <br/>
 
-### (Optionnel) Prompt G — modèle avec exigences explicites
+### (Optionnel) Prompt G — modèle avec exigences explicites - exemples d'utilisation , extraits de code et explication
 
-> **Rédigez un prompt d’examen “modèle”** (pas la réponse) qui impose : **longueur précise** (25–40 **ou** 120–160 **ou** 150–200 mots), **ton** (factuel académique **ou** créatif précis), **interdits** (**sans liste**, **sans code**), **critère 1D vs 2D obligatoire**, et, pour la version longue, **un contre-exemple**. **N’écrivez aucune réponse.**
+> **Rédigez un prompt d’examen “modèle”** (pas la réponse) qui impose : **longueur précise** (25–40 **ou** 120–160 **ou** 150–200 mots), **ton** (factuel académique **ou** créatif précis), **interdits** (**sans liste**, **sans code**), avec des exemples claires d'utilisation
 
 **Votre prompt G (écrivez ici) :**
 
