@@ -28,6 +28,8 @@
 
 
 
+<br/>
+
 ### Prompt B — factuel, développé (120–160 mots)
 
 > **120–160 mots**, **ton académique**, **vocabulaire simple** : définissez `flex` (mise en page **à un axe**) et `grid` (mise en page **à deux dimensions**), exposez **le critère 1D vs 2D**, puis l’**impact** sur **maintenance** et **évolutivité**. **Sans liste. Sans code.**
@@ -51,6 +53,7 @@
 | B    |             |            |       |                   |                  | Définition + critère + impact (120–160 m.) |
 
 
+<br/>
 
 ### Prompt C — bref + nuance (1 phrase, 30–50 mots)
 
@@ -69,6 +72,7 @@
 | C    |             |            |       |                   |                  | 1 phrase, 30–50 mots, + nuance obligatoire |
 
 
+<br/>
 
 ### Prompt D — créatif mais court (1 phrase)
 
@@ -86,7 +90,8 @@
 | ---- | ----------- | ---------- | ----: | ----------------: | ---------------: | ------------------------------------ |
 | D    |             |            |       |                   |                  | 1 phrase, créatif, critère explicite |
 
----
+
+<br/>
 
 ### Prompt E — créatif, développé (150–200 mots)
 
@@ -112,7 +117,8 @@
 | ---- | ----------- | ---------- | ----: | ----------------: | ---------------: | ---------------------------------------------------------------- |
 | E    |             |            |       |                   |                  | Comparaison + wrap/auto-fit + contre-exemple + critère (150–200) |
 
----
+
+<br/>
 
 ### Prompt F — créatif + éviter répétitions (150–200 mots)
 
@@ -138,7 +144,9 @@
 | ---- | ----------- | ---------- | ----: | ----------------: | ---------------: | ----------------------------------------------------------- |
 | F    |             |            |       |                   |                  | Stratégie hybride, anti-redite, mauvaise pratique (150–200) |
 
----
+
+
+<br/>
 
 ### (Optionnel) Prompt G — modèle avec exigences explicites
 
