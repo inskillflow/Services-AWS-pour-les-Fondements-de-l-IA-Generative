@@ -1,6 +1,19 @@
+# EXAMEN — Rédaction de prompts évalués (HTML & Tailwind)
+
+## 0) Rappel des paramètres (à connaître)
+
+* **temperature** : contrôle la créativité/variabilité. Faible (0.0–0.2) = réponses stables et factuelles ; élevée (≥0.8) = réponses plus libres/variées.
+* **max_tokens** : plafond de longueur générée. Trop bas = réponses coupées ; assez haut = permet d’atteindre la longueur demandée.
+* **top_p** : nucleus sampling (0–1). Proche de 1 = éventail large ; plus bas = choix plus restreint.
+* **frequency_penalty** : pénalise les répétitions exactes. Plus haut = moins de répétitions.
+* **presence_penalty** : encourage l’introduction d’idées/mots nouveaux. Plus haut = contenu plus varié.
+
+> Règle d’or : **A/B** → temperature basse, style sobre et précis. **C** → bref + une nuance. **D/E/F** → temperature plus haute, style développé/créatif, comparaisons/contre-exemples, éviter la redite.
 
 
-# Exemple:
+
+## 1) EXEMPLE (format attendu d’un prompt)
+
 
 **Question à traiter :**
 **1.1 Définitions (6 pts)** — *Balise sémantique (ex. `<header>`) :* …
@@ -88,19 +101,58 @@
 
 
 
-# Questions : 
+<br/>
+
+# 2) Consignes globales (obligatoires)
+
+* Pour **chaque question**, fournissez **6 prompts** : **A**, **B**, **C**, **D**, **E**, **F**.
+* Respectez strictement ces formats :
+
+  * **A** : 1 phrase, **25–40 mots**, factuel, vocabulaire simple.
+  * **B** : **120–160 mots**, ton académique, vocabulaire simple, **sans listes**.
+  * **C** : **30–50 mots**, **1 phrase**, **+ une nuance** (mise en garde ou comparaison).
+  * **D** : 1 phrase, **25–40 mots**, **style créatif** mais précis.
+  * **E** : **150–200 mots**, **développé**, **compare** brièvement, **contre-exemple**, **sans listes**.
+  * **F** : **150–200 mots**, **créatif et varié**, **éviter les répétitions**, **idées nouvelles**.
+* Interdits récurrents à rappeler dans vos prompts : **pas de listes**, **pas de code** (sauf mention stricte d’une balise), **pas d’exemples hors consigne**.
 
 
-Pour chaque question : 
+<br/>
 
-- Écris un prompt “**Test A**”,“**Test B**”, “**Test C**”, “**Test D**”, “**Test E**”n “**Test F**”
+# 3) Énoncés à traiter (écrivez vos prompts A→F pour chacun)
 
-1. **Balises sémantiques :** Explique la différence entre `<header>`, `<nav>`, `<section>` et `<footer>` et indique quand éviter `<div>` à la place.
-2. **Tailwind — spacing :** Différence entre `m-4`, `mx-4`, `my-4`, `mt-4` ; donne un cas concret d’utilisation.
-3. **Tailwind — responsive :** Que font les préfixes `sm:`, `md:`, `lg:`, `xl:` et comment sont-ils évalués (mobile-first) ?
-4. **Tailwind — Flex vs Grid :** Quand privilégier `flex`/`flex-col` vs `grid grid-cols-…` ? Donne un critère simple.
-5. **Couleurs & thème :** Explique l’intérêt de `text-slate-700` vs `text-gray-700` et l’usage de `dark:`.
-6. **Typographie :** Rôle de `text-base`, `text-2xl`, `font-semibold`, `leading-relaxed`, `tracking-wide`.
-7. **Utilitaires conditionnels :** Que permet `hover:`, `focus:`, `active:`, `disabled:` et l’ordre de priorité.
+### Q1 — Balises sémantiques
 
+Explique la différence entre **`<header>`**, **`<nav>`**, **`<section>`**, **`<footer>`** et indique **quand éviter `<div>`** à la place.
+*(Écris ici tes 6 prompts A→F, en respectant les formats ci-dessus.)*
+
+### Q2 — Tailwind : spacing
+
+Différence entre **`m-4`**, **`mx-4`**, **`my-4`**, **`mt-4`** ; donner **un cas concret d’utilisation**.
+*(Écris ici tes 6 prompts A→F.)*
+
+### Q3 — Tailwind : responsive (mobile-first)
+
+Que font les préfixes **`sm:`**, **`md:`**, **`lg:`**, **`xl:`** et **comment sont-ils évalués** (mobile-first, min-width, styles progressifs) ?
+*(Écris ici tes 6 prompts A→F.)*
+
+### Q4 — Tailwind : Flex vs Grid
+
+Quand privilégier **`flex`/`flex-col`** vs **`grid grid-cols-…`** ? Donne **un critère simple**.
+*(Écris ici tes 6 prompts A→F.)*
+
+### Q5 — Couleurs & thème
+
+Explique l’intérêt de **`text-slate-700`** vs **`text-gray-700`** et l’usage de **`dark:`** pour le mode sombre.
+*(Écris ici tes 6 prompts A→F.)*
+
+### Q6 — Typographie
+
+Rôle de **`text-base`**, **`text-2xl`**, **`font-semibold`**, **`leading-relaxed`**, **`tracking-wide`** dans la hiérarchie et la lisibilité.
+*(Écris ici tes 6 prompts A→F.)*
+
+### Q7 — Utilitaires conditionnels
+
+Que permettent **`hover:`**, **`focus:`**, **`active:`**, **`disabled:`** et quel est **l’ordre de priorité** / chevauchement attendu ?
+*(Écris ici tes 6 prompts A→F.)*
 
