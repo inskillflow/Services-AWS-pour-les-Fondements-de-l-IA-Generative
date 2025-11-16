@@ -156,8 +156,13 @@
 
 #### Estimation des paramètres
 
-| Test | temperature | max_tokens | top_p | frequency_penalty | presence_penalty | But attendu                                         |
-| ---- | ----------- | ---------- | ----: | ----------------: | ---------------: | Prompt méta conforme (exigences claires, sans code) |
+
+#### Estimation des paramètres
+
+| Test | rôle |temperature | max_tokens | top_p | frequency_penalty | presence_penalty | But attendu                                                 |
+| ---- | ----------- | ----------- | ---------- | ----: | ----------------: | ---------------: | ---------------: |
+| ---- | ----------- | ----------- | ---------- | ----: | ----------------: | ---------------: | ---------------: |
+
 
 <br/>
 
