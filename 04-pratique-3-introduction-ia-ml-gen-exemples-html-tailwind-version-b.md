@@ -1,6 +1,10 @@
 # Question de l'examen — Tailwind : margin/padding vs gap
 
-**Énoncé** : Expliquez **quand privilégier** les classes de **marge / padding** (`m-*`, `p-*`) **vs** les classes `gap-*` sur un conteneur flex ou grid, et proposez **un critère simple** de choix (**espacement interne/extérieur** vs **espacement entre éléments**).
+**Énoncé** : 
+
+1. Expliquez comment fonctionne le responsive design avec Tailwind CSS (préfixes sm:, md:, lg:, etc.) et proposez une règle simple pour décider quelles classes appliquer selon la taille de l’écran (mobile, tablette, ordinateur).
+   
+2 . Expliquez **quand privilégier** les classes de **marge / padding** (`m-*`, `p-*`) **vs** les classes `gap-*` sur un conteneur flex ou grid, et proposez **un critère simple** de choix (**espacement interne/extérieur** vs **espacement entre éléments**).
 
 > **Consigne générale (obligatoire)** : **vous devez produire 6 prompts** (A→F) **sans écrire de réponses de contenu**.
 > Après **chaque prompt**, **renseignez** le tableau des **paramètres estimés** (*temperature, max_tokens, top_p, frequency_penalty, presence_penalty*).
